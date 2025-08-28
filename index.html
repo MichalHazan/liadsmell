@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ליעד שיראל - מפיצי ריח</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f5fff9;
+        --ink: #0f2f26;
+        --muted: #3f6a5b;
+        --card: #fff;
+        --line: #d9efe5;
+        --shadow: 0 10px 30px rgba(7, 53, 38, 0.08);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Heebo, system-ui, Arial;
+        background: var(--bg);
+        color: var(--ink);
+        overflow-x: hidden;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .container {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        background: #ffffffcc;
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(8px);
+        z-index: 10;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+      }
+      .brand {
+        font-weight: 800;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 18px;
+        border-radius: 14px;
+        background: linear-gradient(90deg, #eafff4, #fff);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        font-weight: 800;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.6),
+          transparent
+        );
+        transform: translateX(-120%);
+        animation: shine 4s ease-in-out infinite;
+      }
+      @keyframes shine {
+        50% {
+          transform: translateX(120%);
+        }
+      }
+
+      .hero {
+        padding: 38px 0 28px;
+      }
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: clamp(28px, 7vw, 48px);
+      }
+      .hero h2 {
+        margin: 0 0 10px;
+        font-size: clamp(18px, 4.2vw, 26px);
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .hero p {
+        margin: 0 16px 16px 0;
+        color: #396355;
+        font-size: clamp(14px, 3.8vw, 18px);
+      }
+
+      /* Divider: נדנוד חצי סיבוב לכל צד, לא סיבוב מלא */
+      /* Divider: גל */
+      .divider {
+        position: relative;
+        height: 80px;
+        margin: 8px 0 22px;
+        overflow: hidden;
+      }
+      .divider::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200%;
+        height: 100%;
+        background: radial-gradient(circle at 50% 40%, #ffe9b3 0%, #fff 60%);
+        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='black' d='M0,64L60,74.7C120,85,240,107,360,101.3C480,96,600,64,720,74.7C840,85,960,139,1080,165.3C1200,192,1320,192,1380,192L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z'/></svg>");
+        mask-repeat: repeat-x;
+        mask-size: cover;
+        animation: waveMove 6s ease-in-out infinite alternate;
+      }
+      @keyframes waveMove {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-25%);
+        }
+      }
+
+      .section-title {
+        font-size: clamp(22px, 5.5vw, 32px);
+        margin: 0 0 16px;
+        text-align: center;
+      }
+
+      .features {
+        padding: 10px 0 28px;
+      }
+      .grid {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(12, 1fr);
+      }
+      .box {
+        grid-column: span 6;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 18px;
+        min-height: 88px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+          opacity 0.45s;
+      }
+      .icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #c1ffd8, #fff6d6);
+        border: 1px solid #eae2c9;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        flex: 0 0 28px;
+      }
+      .box.show {
+        opacity: 1;
+        transform: none;
+      }
+      .box {
+        transition-delay: var(--d, 0s);
+      }
+
+      .gallery {
+        padding: 12px 0 28px;
+      }
+      .cards {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(12, 1fr);
+      }
+      .card {
+        grid-column: span 6;
+        aspect-ratio: 4/3;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: #f1fbf5;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+          opacity 0.45s;
+        transition-delay: var(--d, 0s);
+      }
+      .card.show {
+        opacity: 1;
+        transform: none;
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s;
+      }
+      .card:hover img {
+        transform: scale(1.05);
+      }
+      .card.large {
+        grid-column: span 12;
+      }
+
+      .experience .quote {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+        font-size: clamp(16px, 4.2vw, 20px);
+        line-height: 1.6;
+      }
+
+      .final-cta {
+        padding: 26px 0 36px;
+        text-align: center;
+      }
+      .final-cta h3 {
+        margin: 0 0 6px;
+        font-size: clamp(20px, 5.3vw, 28px);
+      }
+      .final-cta p {
+        margin: 0 0 14px;
+        color: var(--muted);
+      }
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 14px 0 26px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* אפקט כניסה מהיר לטקסטים */
+      .reveal {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+          opacity 0.45s;
+        transition-delay: var(--d, 0s);
+      }
+      .reveal.show {
+        opacity: 1;
+        transform: none;
+      }
+
+      @media (max-width: 900px) {
+        .box,
+        .card {
+          grid-column: span 12;
+        }
+        .hero {
+          padding: 26px 0 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <div class="brand reveal" style="--d: 0s">ליעד שיראל - מפיצי ריח</div>
+        <a class="btn reveal" style="--d: 0.06s" href="tel:0507300651"
+          >📞 0507300651</a
+        >
+      </div>
+    </header>
+
+    <section class="container hero">
+      <h1 class="reveal" style="--d: 0.02s">ליעד שיראל - מפיצי ריח</h1>
+      <h2 class="reveal" style="--d: 0.06s">
+        המומחים ביצירת אווירה נעימה בכל חלל
+      </h2>
+      <p class="reveal" style="--d: 0.1s">
+        כבר שנים אנחנו מלווים עשרות בעלי עסקים, מנהלי בניינים וחברות שמבקשים
+        לשדרג את חווית המבקרים, העובדים והדיירים שלהם
+      </p>
+      <a class="btn reveal" style="--d: 0.14s" href="tel:0507300651"
+        >📞 חייגו עכשיו 0507300651</a
+      >
+    </section>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <section class="container features">
+      <h3 class="section-title reveal" style="--d: 0.02s">עם המפיצים שלנו</h3>
+      <div class="grid">
+        <div class="box" style="--d: 0.04s">
+          <span class="icon">✓</span>
+          <div>החלל תמיד מריח נקי, רענן ומזמין</div>
+        </div>
+        <div class="box" style="--d: 0.08s">
+          <span class="icon">⚙︎</span>
+          <div>השירות כולל התקנה מלאה ותחזוקה שוטפת</div>
+        </div>
+        <div class="box" style="--d: 0.12s">
+          <span class="icon">✿</span>
+          <div>מגוון רחב של ריחות איכותיים לבחירה</div>
+        </div>
+        <div class="box" style="--d: 0.16s">
+          <span class="icon">▣</span>
+          <div>התאמה לכל גודל חלל – קטן או גדול</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <section class="container gallery">
+      <h3 class="section-title reveal" style="--d: 0.02s">
+        הפתרונות שלנו בפעולה
+      </h3>
+      <div class="cards">
+        <figure class="card" style="--d: 0.04s">
+          <img src="./whitesmall.jpeg" alt="חלל מואר ונקי" />
+        </figure>
+        <figure class="card" style="--d: 0.08s">
+          <img src="./blacksmall.jpeg" alt="עיצוב כהה אלגנטי" />
+        </figure>
+        <figure class="card large" style="--d: 0.12s">
+          <img src="./whitebig.jpeg" alt="חלל גדול עם אווירה מרגיעה" />
+        </figure>
+        <figure class="card" style="--d: 0.16s">
+          <img src="./whitewithmore.jpeg" alt="שילוב ריחות בחלל מסחרי" />
+        </figure>
+      </div>
+    </section>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <section class="container experience" style="padding: 6px 0 28px">
+      <h3 class="section-title reveal" style="--d: 0.02s">
+        החוויה של הלקוחות שלנו
+      </h3>
+      <div class="quote reveal" style="--d: 0.06s">
+        <p>
+          הלקוחות שלנו לא מתעסקים עם כלום – רק בוחרים את הריח שהם אוהבים, ואנחנו
+          דואגים לכל השאר.
+        </p>
+        <p><strong>זה פשוט. זה נעים. זה שדרוג שכל אחד מרגיש.</strong></p>
+      </div>
+    </section>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <section class="final-cta container">
+      <h3 class="reveal" style="--d: 0.02s">להצעת מחיר מהירה</h3>
+      <p class="reveal" style="--d: 0.06s">
+        קבלו הצעת מחיר מותאמת לחלל שלכם תוך דקות
+      </p>
+      <a class="btn reveal" style="--d: 0.1s" href="tel:0507300651"
+        >📞 חייגו עכשיו 0507300651</a
+      >
+    </section>
+
+    <footer>
+      <div>ליעד שיראל - מפיצי ריח</div>
+      <div>המומחים ביצירת אווירה נעימה בכל חלל</div>
+    </footer>
+
+    <script>
+      // כניסת טקסטים, תיבות וגלריה — מהיר אך מורגש
+      const io = new IntersectionObserver(
+        (es) => {
+          es.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("show");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      document
+        .querySelectorAll(".reveal,.box,.card")
+        .forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
