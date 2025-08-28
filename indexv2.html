@@ -10,12 +10,16 @@
     />
     <style>
       :root {
-        --bg: #f5fff9;
-        --ink: #0f2f26;
-        --muted: #3f6a5b;
-        --card: #fff;
-        --line: #d9efe5;
-        --shadow: 0 10px 30px rgba(7, 53, 38, 0.08);
+        --ink: #0a1020;
+        --muted: #33405e;
+        --card: #ffffff;
+        --line: #e6ecf6;
+        /* פלטת “וואו”: טורקיז+ניאון ירוק+זהב */
+        --c1: #00e5ff;
+        --c2: #00ff95;
+        --c3: #ffd36e;
+        --bg: #f9fbff;
+        --shadow: 0 14px 40px rgba(10, 16, 32, 0.12);
       }
       * {
         box-sizing: border-box;
@@ -32,15 +36,49 @@
         color: inherit;
       }
       .container {
-        max-width: 1080px;
+        max-width: 1120px;
         margin: 0 auto;
         padding: 0 16px;
       }
 
+      /* רקע “אורורה” עז */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: -25vmax;
+        z-index: -1;
+        filter: blur(60px) saturate(120%);
+        background: radial-gradient(
+            45vmax 28vmax at 85% 10%,
+            rgba(0, 229, 255, 0.35),
+            transparent 60%
+          ),
+          radial-gradient(
+            45vmax 28vmax at 10% 90%,
+            rgba(0, 255, 149, 0.28),
+            transparent 60%
+          ),
+          radial-gradient(
+            30vmax 22vmax at 40% 40%,
+            rgba(255, 211, 110, 0.22),
+            transparent 60%
+          );
+        animation: aurora 14s ease-in-out infinite alternate;
+      }
+      @keyframes aurora {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(-3%, 2%);
+        }
+      }
+
+      /* Header */
       header {
         position: sticky;
         top: 0;
-        background: #ffffffcc;
+        background: #ffffffc9;
         border-bottom: 1px solid var(--line);
         backdrop-filter: blur(8px);
         z-index: 10;
@@ -53,6 +91,7 @@
       }
       .brand {
         font-weight: 800;
+        letter-spacing: 0.2px;
       }
       .btn {
         display: inline-flex;
@@ -60,25 +99,20 @@
         gap: 10px;
         padding: 12px 18px;
         border-radius: 14px;
-        background: linear-gradient(90deg, #eafff4, #fff);
-        border: 1px solid var(--line);
-        box-shadow: var(--shadow);
         font-weight: 800;
         position: relative;
         overflow: hidden;
+        color: #0a1020;
+        background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+        box-shadow: 0 10px 30px rgba(0, 229, 255, 0.22);
       }
       .btn::after {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.6),
-          transparent
-        );
+        background: linear-gradient(90deg, transparent, #ffffff99, transparent);
         transform: translateX(-120%);
-        animation: shine 4s ease-in-out infinite;
+        animation: shine 3.8s ease-in-out infinite;
       }
       @keyframes shine {
         50% {
@@ -86,32 +120,32 @@
         }
       }
 
+      /* Hero */
       .hero {
-        padding: 38px 0 28px;
-        text-align: center;
+        padding: 42px 0 28px;
       }
       .hero h1 {
         margin: 0 0 10px;
-        font-size: clamp(28px, 7vw, 48px);
+        font-size: clamp(30px, 7vw, 56px);
+        line-height: 1.08;
       }
       .hero h2 {
-        margin: 0 0 10px;
-        font-size: clamp(18px, 4.2vw, 26px);
+        margin: 0 0 12px;
+        font-size: clamp(18px, 4.6vw, 28px);
         color: var(--muted);
-        font-weight: 600;
+        font-weight: 700;
       }
       .hero p {
-        margin: 0 16px 16px 0;
-        color: #396355;
+        margin: 0 0 18px;
+        color: #3b4c77;
         font-size: clamp(14px, 3.8vw, 18px);
       }
 
-      /* Divider: נדנוד חצי סיבוב לכל צד, לא סיבוב מלא */
-      /* Divider: גל */
+      /* Divider כגל נוצץ (לא סיבוב מלא) */
       .divider {
         position: relative;
-        height: 80px;
-        margin: 8px 0 22px;
+        height: 90px;
+        margin: 10px 0 24px;
         overflow: hidden;
       }
       .divider::before {
@@ -119,15 +153,32 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 200%;
+        width: 220%;
         height: 100%;
-        background: radial-gradient(circle at 50% 40%, #ffe9b3 0%, #fff 60%);
-        mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='black' d='M0,64L60,74.7C120,85,240,107,360,101.3C480,96,600,64,720,74.7C840,85,960,139,1080,165.3C1200,192,1320,192,1380,192L1440,192L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z'/></svg>");
-        mask-repeat: repeat-x;
-        mask-size: cover;
-        animation: waveMove 6s ease-in-out infinite alternate;
+        background: linear-gradient(
+            90deg,
+            #fff 0%,
+            #fff 40%,
+            rgba(255, 255, 255, 0.95) 60%,
+            #fff 100%
+          ),
+          linear-gradient(
+            90deg,
+            rgba(0, 229, 255, 0.2),
+            rgba(0, 255, 149, 0.2),
+            rgba(255, 211, 110, 0.2)
+          );
+        -webkit-mask: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='black' d='M0,224L40,218.7C80,213,160,203,240,197.3C320,192,400,192,480,192C560,192,640,192,720,186.7C800,181,880,171,960,176C1040,181,1120,203,1200,213.3C1280,224,1360,224,1400,224L1440,224L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z'/></svg>")
+          center/cover repeat-x;
+        mask: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='black' d='M0,224L40,218.7C80,213,160,203,240,197.3C320,192,400,192,480,192C560,192,640,192,720,186.7C800,181,880,171,960,176C1040,181,1120,203,1200,213.3C1280,224,1360,224,1400,224L1440,224L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z'/></svg>")
+          center/cover repeat-x;
+        animation: waveX 7s ease-in-out infinite alternate,
+          waveTilt 12s ease-in-out infinite alternate;
+        box-shadow: inset 0 -30px 40px #ffffffaa;
       }
-      @keyframes waveMove {
+      @keyframes waveX {
         0% {
           transform: translateX(0);
         }
@@ -135,15 +186,25 @@
           transform: translateX(-25%);
         }
       }
+      @keyframes waveTilt {
+        0% {
+          transform: translateX(0) rotate(-14deg);
+        }
+        100% {
+          transform: translateX(-4%) rotate(14deg);
+        }
+      }
 
+      /* כותרת אזורית */
       .section-title {
-        font-size: clamp(22px, 5.5vw, 32px);
+        font-size: clamp(22px, 5.6vw, 34px);
         margin: 0 0 16px;
         text-align: center;
       }
 
+      /* תיבות תועלות — כרטיסים עם מסגרת גרדיאנט “ניאון” */
       .features {
-        padding: 10px 0 28px;
+        padding: 6px 0 30px;
       }
       .grid {
         display: grid;
@@ -151,60 +212,62 @@
         grid-template-columns: repeat(12, 1fr);
       }
       .box {
+        position: relative;
         grid-column: span 6;
-        background: var(--card);
-        border: 1px solid var(--line);
         border-radius: 16px;
-        padding: 18px;
-        min-height: 88px;
+        min-height: 92px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
+        padding: 18px;
+        background: linear-gradient(#fff, #fff) padding-box,
+          linear-gradient(90deg, var(--c1), var(--c2), var(--c3)) border-box;
+        border: 2px solid transparent;
         box-shadow: var(--shadow);
         opacity: 0;
-        transform: translateY(14px) scale(0.98);
-        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
-          opacity 0.45s;
-      }
-      .icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #c1ffd8, #fff6d6);
-        border: 1px solid #eae2c9;
-        display: grid;
-        place-items: center;
-        font-weight: 800;
-        flex: 0 0 28px;
+        transform: translateY(16px) scale(0.98);
+        transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1),
+          opacity 0.38s;
+        transition-delay: var(--d, 0s);
       }
       .box.show {
         opacity: 1;
         transform: none;
       }
-      .box {
-        transition-delay: var(--d, 0s);
+      .icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        color: #0a1020;
+        background: linear-gradient(135deg, var(--c1), var(--c2));
+        box-shadow: 0 10px 24px rgba(0, 229, 255, 0.25);
       }
 
+      /* גלריה נועזת */
       .gallery {
-        padding: 12px 0 28px;
+        padding: 8px 0 30px;
       }
       .cards {
         display: grid;
-        gap: 12px;
+        gap: 14px;
         grid-template-columns: repeat(12, 1fr);
       }
       .card {
         grid-column: span 6;
         aspect-ratio: 4/3;
-        border-radius: 16px;
+        border-radius: 18px;
         overflow: hidden;
-        border: 1px solid var(--line);
-        background: #f1fbf5;
-        box-shadow: var(--shadow);
+        border: 2px solid transparent;
+        background: linear-gradient(#eef4ff, #ffffff) padding-box,
+          linear-gradient(120deg, var(--c1), var(--c2), var(--c3)) border-box;
+        box-shadow: 0 18px 48px rgba(10, 16, 32, 0.12);
         opacity: 0;
-        transform: translateY(14px) scale(0.98);
-        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
-          opacity 0.45s;
+        transform: translateY(16px) scale(0.985);
+        transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1),
+          opacity 0.42s;
         transition-delay: var(--d, 0s);
       }
       .card.show {
@@ -215,32 +278,33 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transform: scale(1.03);
         transition: transform 0.6s;
       }
       .card:hover img {
-        transform: scale(1.05);
-      }
-      .card.large {
-        grid-column: span 12;
+        transform: scale(1.08);
       }
 
+      /* חווית לקוחות */
       .experience .quote {
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 20px;
+        background: linear-gradient(#ffffff, #ffffff) padding-box,
+          linear-gradient(90deg, var(--c1), var(--c3)) border-box;
+        border: 2px solid transparent;
+        border-radius: 18px;
+        padding: 22px;
         box-shadow: var(--shadow);
         font-size: clamp(16px, 4.2vw, 20px);
-        line-height: 1.6;
+        line-height: 1.65;
       }
 
+      /* CTA סופי */
       .final-cta {
-        padding: 26px 0 36px;
+        padding: 26px 0 38px;
         text-align: center;
       }
       .final-cta h3 {
-        margin: 0 0 6px;
-        font-size: clamp(20px, 5.3vw, 28px);
+        margin: 0 0 8px;
+        font-size: clamp(20px, 5.3vw, 30px);
       }
       .final-cta p {
         margin: 0 0 14px;
@@ -254,12 +318,12 @@
         font-size: 14px;
       }
 
-      /* אפקט כניסה מהיר לטקסטים */
+      /* אנימציות כניסה מהירות אך מורגשות */
       .reveal {
         opacity: 0;
-        transform: translateY(14px) scale(0.98);
-        transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
-          opacity 0.45s;
+        transform: translateY(14px) scale(0.985);
+        transition: transform 0.36s cubic-bezier(0.2, 0.8, 0.2, 1),
+          opacity 0.36s;
         transition-delay: var(--d, 0s);
       }
       .reveal.show {
@@ -267,27 +331,30 @@
         transform: none;
       }
 
+      /* מובייל */
       @media (max-width: 900px) {
         .box,
         .card {
           grid-column: span 12;
         }
         .hero {
-          padding: 26px 0 18px;
+          padding: 30px 0 18px;
         }
       }
     </style>
   </head>
   <body>
+    <!-- Header -->
     <header>
       <div class="container nav">
         <div class="brand reveal" style="--d: 0s">ליעד שיראל - מפיצי ריח</div>
         <a class="btn reveal" style="--d: 0.06s" href="tel:0507300651"
-          >📞 0507300651</a
+          >📞 חייגו עכשיו 0507300651</a
         >
       </div>
     </header>
 
+    <!-- Hero -->
     <section class="container hero">
       <h1 class="reveal" style="--d: 0.02s">ליעד שיראל - מפיצי ריח</h1>
       <h2 class="reveal" style="--d: 0.06s">
@@ -302,8 +369,10 @@
       >
     </section>
 
+    <!-- Divider -->
     <div class="divider" aria-hidden="true"></div>
 
+    <!-- Features -->
     <section class="container features">
       <h3 class="section-title reveal" style="--d: 0.02s">עם המפיצים שלנו</h3>
       <div class="grid">
@@ -326,8 +395,10 @@
       </div>
     </section>
 
+    <!-- Divider -->
     <div class="divider" aria-hidden="true"></div>
 
+    <!-- Solutions in action -->
     <section class="container gallery">
       <h3 class="section-title reveal" style="--d: 0.02s">
         הפתרונות שלנו בפעולה
@@ -348,9 +419,11 @@
       </div>
     </section>
 
+    <!-- Divider -->
     <div class="divider" aria-hidden="true"></div>
 
-    <section class="container experience" style="padding: 6px 0 28px">
+    <!-- Experience -->
+    <section class="container experience" style="padding: 6px 0 30px">
       <h3 class="section-title reveal" style="--d: 0.02s">
         החוויה של הלקוחות שלנו
       </h3>
@@ -363,8 +436,10 @@
       </div>
     </section>
 
+    <!-- Divider -->
     <div class="divider" aria-hidden="true"></div>
 
+    <!-- Final CTA -->
     <section class="final-cta container">
       <h3 class="reveal" style="--d: 0.02s">להצעת מחיר מהירה</h3>
       <p class="reveal" style="--d: 0.06s">
@@ -375,13 +450,14 @@
       >
     </section>
 
+    <!-- Footer -->
     <footer>
       <div>ליעד שיראל - מפיצי ריח</div>
       <div>המומחים ביצירת אווירה נעימה בכל חלל</div>
     </footer>
 
     <script>
-      // כניסת טקסטים, תיבות וגלריה — מהיר אך מורגש
+      // כניסות מהירות ונקיות
       const io = new IntersectionObserver(
         (es) => {
           es.forEach((e) => {
