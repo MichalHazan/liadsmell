@@ -381,6 +381,11 @@
     </footer>
 
     <script>
+      document.addEventListener(
+        "contextmenu",
+        (e) => e.preventDefault(),
+        false
+      );
       // כניסת טקסטים, תיבות וגלריה — מהיר אך מורגש
       const io = new IntersectionObserver(
         (es) => {
